@@ -1,0 +1,53 @@
+# This workflow uses actions that are not created by me (@stoe).
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# I (@stoe) recommend pinning actions to a commit SHA.
+# To get a newer version, you will need to update the SHA,
+# or leverage dependabot (see .github/dependabot.yml).
+# You can also reference a tag or branch, but the action may change without warning.
+
+name: GitHub App Authentication Demo
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+        with:
+          path: github-actions-app-demo
+
+      # using https://github.com/marketplace/actions/github-app-token
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
+        with:
+          app_id: ${{ vars.DEMO_APP_ID }}
+          private_key: ${{ secrets.DEMO_APP_PEM }}
+          repository: stoe-demo/merge-queue-demo
+
+      - name: Use token
+        env:
+          TOKEN: ${{ steps.generate_token.outputs.token }}
+        run: |
+          echo "The generated token is masked: ${TOKEN}"
+
+      - name: Checkout private repository
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+        with:
+          repository: stoe-demo/merge-queue-demo
+          token: ${{ steps.generate_token.outputs.token }}
+          path: merge-queue-demo
+
+      - name: Show contents
+        run: ls -lR

@@ -1,0 +1,14 @@
+{
+	"name": "github-actions-app-demo",
+	"image": "mcr.microsoft.com/devcontainers/base:alpine-3.17",
+
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/zsh"
+	},
+	"extensions": [
+		"cschleiden.vscode-github-actions",
+		"dbaeumer.vscode-eslint",
+		"editorconfig.editorconfig",
+		"esbenp.prettier-vscode"
+	]
+}
