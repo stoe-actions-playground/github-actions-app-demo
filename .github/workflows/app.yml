@@ -25,6 +25,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
         with:
+          # token: ${{ secrets.GITHUB_TOKEN }}
           path: github-actions-app-demo
 
       # using https://github.com/marketplace/actions/github-app-token
@@ -48,6 +49,13 @@ jobs:
           repository: stoe-demo/merge-queue-demo
           token: ${{ steps.generate_token.outputs.token }}
           path: merge-queue-demo
+
+      - name: Checkout private repository
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+        with:
+          repository: stoe-operations/policies
+          token: ${{ steps.generate_token.outputs.token }}
+          path: policies
 
       - name: Show contents
         run: ls -lR
