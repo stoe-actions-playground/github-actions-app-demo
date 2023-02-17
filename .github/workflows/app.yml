@@ -30,7 +30,7 @@ jobs:
 
       # using https://github.com/marketplace/actions/github-app-token
       - name: Generate token
-        id: generate_token
+        id: generate_token_1
         uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
         with:
           app_id: ${{ vars.DEMO_APP_ID }}
@@ -39,7 +39,7 @@ jobs:
 
       - name: Use token
         env:
-          TOKEN: ${{ steps.generate_token.outputs.token }}
+          TOKEN: ${{ steps.generate_token_1.outputs.token }}
         run: |
           echo "The generated token is masked: ${TOKEN}"
 
@@ -47,14 +47,23 @@ jobs:
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
         with:
           repository: stoe-demo/merge-queue-demo
-          token: ${{ steps.generate_token.outputs.token }}
+          token: ${{ steps.generate_token_1.outputs.token }}
           path: merge-queue-demo
+
+      # using https://github.com/marketplace/actions/github-app-token
+      - name: Generate token
+        id: generate_token_2
+        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
+        with:
+          app_id: ${{ vars.DEMO_APP_ID }}
+          private_key: ${{ secrets.DEMO_APP_PEM }}
+          repository: stoe-operations/policies
 
       - name: Checkout private repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
         with:
           repository: stoe-operations/policies
-          token: ${{ steps.generate_token.outputs.token }}
+          token: ${{ steps.generate_token_2.outputs.token }}
           path: policies
 
       - name: Show contents
