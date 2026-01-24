@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           # token: ${{ secrets.GITHUB_TOKEN }}
           path: github-actions-app-demo
@@ -44,7 +44,7 @@ jobs:
           echo "The generated token is masked: ${TOKEN}"
 
       - name: Checkout private repository
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           repository: stoe-demo/merge-queue-demo
           token: ${{ steps.generate_token_1.outputs.token }}
@@ -60,7 +60,7 @@ jobs:
           repository: stoe-operations/policies
 
       - name: Checkout private repository
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           repository: stoe-operations/policies
           token: ${{ steps.generate_token_2.outputs.token }}
